@@ -21,66 +21,83 @@
 
         }
 
-        .op {
-            height: 200px;
+        #drop {
+            display: flex;
+            gap: 40px;
+            padding: 40px;
+
         }
-        
+
+        .imageOP {
+            height: 155px;
+            width: 155px;
+        }
+
+        .op {
+            height: 145px;
+            width: 145px;
+
+        }
 
         .imgBox {
-    background-image: url(try1.png);
-    position: relative;
-    left: 1px;
-    top: 2px;
-    height: 145px;
-    width: 145px;
-    cursor: pointer;
-}
+            /* background-image: url(try1.png); */
+            position: relative;
+            left: 1px;
+            top: 2px;
+            height: 145px;
+            width: 145px;
+            cursor: pointer;
+        }
 
-.whiteBox{
-    display: inline-block;
-    height: 155px;
-    width: 155px;
-    margin: 10px;
-    background-color: white;
-    border: 3px black solid;
-}
 
-.hold{
-    border: solid red 4px;
-}
+        .whiteBox {
+            display: inline-block;
+            height: 155px;
+            width: 155px;
+            margin: 10px;
+            background-color: white;
+            border: 3px black solid;
+        }
 
-.dashed{
-    background: rgb(214, 206, 206);
-    border-style: dashed;
-}
-.hide{
-    display: none;
-}
-.unDashed{
-    background-color: white;
-    border: 3px black solid;
-}
+        .hold {
+            border: solid red 4px;
+        }
 
+        .dashed {
+            background: rgb(214, 206, 206);
+            border-style: dashed;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .unDashed {
+            background-color: white;
+            border: 3px black solid;
+        }
     </style>
 </head>
 
 <body>
     <h1 class="alert-heading">Select Multiple imgs</h1><br>
-    <input class="link-primary" type="file" id="img" value="Select" multiple="multiple" accept="image/jpeg, image/png,image/jpg"/>
-    <output id="result"></output>
-    <div class="container" id="show"></div>
-    <div class="whiteBox">
-        <div class="imgBox" draggable="true"></div>
-    </div>
-    <div class="whiteBox">
+    <input class="link-primary" type="file" id="img" value="Select" multiple="multiple"
+        accept="image/jpeg, image/png,image/jpg" />
+    <output id="result"></output><br>
+    <output id="drop"></output>
+    <!-- <div class="whiteBox"> 
+          <div class="imgBox" draggable="true"></div>  
+     </div> 
+            <div class="whiteBox">
     
     </div>
     <div class="whiteBox"></div>
-    <div class="whiteBox"></div>
-
+    <div class="whiteBox"></div> -->
 
     <script type="text/javascript">
-        $("#img").change(function (e) {
+        $("#img").change(function abc(e) {//outer fun
+
+            let a = 0
             if (window.File && window.FileReader && window.FileList) {
                 var files = e.target.files;
                 console.log(files)
@@ -88,71 +105,126 @@
                 for (let i = 0; i < files.length; i++) {
                     var picReader = new FileReader()
                     console.log(picReader)
-                    picReader.addEventListener("load", function (event) {
+                    picReader.addEventListener("load", function load(event) {//inner fun
                         var picFile = event.target
                         console.log(picFile)
                         const div = document.createElement("div")
-                        div.innerHTML = `<img class="op" src="${picFile.result}" title=${picFile.name}>`
+                        const dragDiv = document.createElement("div")
+                        div.id = "image"
+                        div.className = "imageOP"
+                        dragDiv.className = "whiteBox"
+
+                        div.innerHTML = `<div class="inDiv" style='background-image:url("${picFile.result}");top: 5px; left: 5px; background-size:cover;  position: relative; height:145px; width:145px; cursor: pointer;'></div>`
+                        //src="${picFile.result}" title=${picFile.name}
                         output.appendChild(div)
+                        document.getElementById("drop").appendChild(dragDiv)
+
+                        //console.log(a + " in this")
+                        return a
                         //div=document.getElementById("show").innerHTML=`<img class="op" src="${picFile.result}">`
                     })
+
                     picReader.readAsDataURL(files[i])
+
                 }
 
             }
             else {
                 alert("your Browser is not supported")
             }
+            console.log('This is drag and drop utility');
+            console.log(a + "is it")
+            // const imgBox = document.querySelector('.imgBox');
+            const whiteBoxs = document.getElementsByClassName('whitebox');
+            const innerBoxMain = document.querySelector('.inDiv');
+            const mainBox = document.getElementsByClassName('imageOP');
 
-        });
+            // Event listeners for draggable element imgBox
+            /*imgBox.addEventListener('dragstart', (e) => {
+                console.log('DragStart has been triggered');
+                e.target.className += ' hold';
+                setTimeout(() => {
+                    e.target.className = 'hide';
+                }, 0);
+    
+            });
+            imgBox.addEventListener('dragend', (e) => {
+                console.log('DragEnd has been triggered');
+                e.target.className = 'imgBox';
+               
+            });*/
 
-        console.log('This is drag and drop utility');
+            innerBoxMain.addEventListener('dragstart', (e) => {
+                console.log('DragStart in maqinBox has been triggered ');
+                e.target.className += ' hold';
+                setTimeout(() => {
+                    e.target.className = 'hide';
+                }, 0);
 
-        const imgBox = document.querySelector('.imgBox');
-        const whiteBoxes = document.getElementsByClassName('whiteBox');
-
-        // Event listeners for draggable element imgBox
-        imgBox.addEventListener('dragstart', (e) => {
-            console.log('DragStart has been triggered');
-            e.target.className += ' hold';
-            setTimeout(() => {
-                e.target.className = 'hide';
-            }, 0);
-
-        });
-
-        imgBox.addEventListener('dragend', (e) => {
-            console.log('DragEnd has been triggered');
-            e.target.className = 'imgBox';
-           
-        });
-
-        for (whiteBox of whiteBoxes) {
-            whiteBox.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                console.log('DragOver has been triggered');
             });
 
-            whiteBox.addEventListener('dragenter', (e) => {
-                console.log('DragEnter has been triggered');
-                e.target.className += ' dashed';
-            })
+            innerBoxMain.addEventListener('dragend', (e) => {
+                console.log('DragEnd has been triggered');
+                e.target.className = 'imgBox';
 
-            whiteBox.addEventListener('dragleave', (e) => {
-                console.log('DragLeave has been triggered');
-                e.target.className = 'whiteBox'
-            })
+            });
 
-            whiteBox.addEventListener('drop', (e) => {
-                console.log('Drop has been triggered');
-                e.target.append(imgBox);
-                //e.target.className -= ' dashed';
-                setTimeout(() => {
-                e.target.classList.remove('dashed');
-            }, 0);
+            /*for (whiteBox of whiteBoxes) {
+                whiteBox.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    console.log('DragOver has been triggered');
+                });
+    
+                whiteBox.addEventListener('dragenter', (e) => {
+                    console.log('DragEnter has been triggered');
+                    e.target.className += ' dashed';
+                })
+    
+                whiteBox.addEventListener('dragleave', (e) => {
+                    console.log('DragLeave has been triggered');
+                    e.target.className = 'whiteBox'
+                })
+    
+                whiteBox.addEventListener('drop', (e) => {
+                    console.log('Drop has been triggered');
+                    e.target.append(imgBox);
+                    //e.target.className -= ' dashed';
+                    setTimeout(() => {
+                    e.target.classList.remove('dashed');
+                }, 0);
+    
+                })
+            }*/
+            for (imageOP of mainBox) {
+                whiteBox.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    console.log('DragOver has been triggered');
+                });
 
-            })
-        }
+                whiteBox.addEventListener('dragenter', (e) => {
+                    console.log('DragEnter has been triggered');
+                    e.target.className += ' dashed';
+                })
+
+                whiteBox.addEventListener('dragleave', (e) => {
+                    console.log('DragLeave has been triggered');
+                    e.target.className = 'whiteBox'
+                })
+
+                whiteBox.addEventListener('drop', (e) => {
+                    console.log('Drop has been triggered');
+                    e.target.append(imgBox);
+                    //e.target.className -= ' dashed';
+                    setTimeout(() => {
+                        e.target.classList.remove('dashed');
+                    }, 0);
+
+                })
+            }
+
+
+        });
+
 
     </script>
 </body>
