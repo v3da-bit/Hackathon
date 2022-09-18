@@ -1,59 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
-		
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
-		 <style>
-			#images { 
-				list-style-type: none;  
-			}
-			#images li { 
-				margin:5px;
-				float: left; 
-				width: 180px; 
-				height: 180px; 
-				font-size: 4em; 
-				text-align: center; 
-				cursor:pointer;
-			}
-		</style>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+        #result {
+            display: flex;
+            gap: 40px;
+            padding: 40px;
+
+        }
+
+        #drop {
+            display: flex;
+            gap: 40px;
+            padding: 40px;
+
+        }
+
+        .outDiv {
+            height: 155px;
+            width: 155px;
+        }
+
+        .op {
+            height: 145px;
+            width: 145px;
+
+        }
+
+        .imgBox {
+            /* background-image: url(try1.png); */
+            position: relative;
+            left: 1px;
+            top: 2px;
+            height: 145px;
+            width: 145px;
+            cursor: pointer;
+        }
+
+
+        .dragBox {
+            display: inline-block;
+            height: 155px;
+            width: 155px;
+            margin: 10px;
+            background-color: white;
+            border: 3px black solid;
+        }
+
+        .hold {
+            border: solid red 4px;
+        }
+
+        .dashed {
+            background: rgb(214, 206, 206);
+            border-style: dashed;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .unDashed {
+            background-color: white;
+            border: 3px black solid;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
+    
+</head>
+
 <body>
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="https://sourcecodester.com">Sourcecodester</a>
-		</div>
-	</nav>
-	<div class="col-md-3"></div>
-	<div class="col-md-6 well">
-		<h3 class="text-primary">JavaScript - Dynamic Image Reorder</h3>
-		<hr style="border-top:1px dotted #ccc;"/>
-		<ul id="images">
-			<label for="1">1</label>
-			<li id="1"class="ui-state-default"><img src="images/image1.gif"  height="100%"width="100%"/></li>
-		
-			<label for="2"></label>
-			<li id="2"class="ui-state-default"><img src="images/image2.jpg"  height="100%"width="100%"/></li>
-			<li class="ui-state-default"><img src="images/image3.jpg"  height="100%"width="100%"/></li>
-			<li class="ui-state-default"><img src="images/image3.jpg"  height="100%"width="100%"/></li>
-			<li class="ui-state-default"><img src="images/image1.gif"  height="100%"width="100%"/></li>
-			<li class="ui-state-default"><img src="images/image2.jpg"  height="100%"width="100%"/></li>
-		</ul>
-	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js"
-	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-	$( "#images" ).sortable();
-	$( "#images" ).disableSelection();
-});
-</script>
-</body>	
+    <h1 class="alert-heading">Select Multiple imgs</h1><br>
+    <label for="img">Select</label>
+    <input class="link-primary" type="file" id="img" value="Select" multiple="multiple"
+        accept="image/jpeg, image/png,image/jpg" />
+    <output id="result"></output><br>
+    <output id="drop"></output><br>
+    <!-- <div class="whiteBox"> 
+          <div class="imgBox" draggable="true"></div>  
+     </div> 
+            <div class="whiteBox">
+    
+    </div>
+    <div class="whiteBox"></div>
+    <div class="whiteBox"></div> -->
+
+    <script type="text/javascript">
+        $("#img").change(function abc(e) {//outer fun
+
+            let a = 0
+            if (window.File && window.FileReader && window.FileList) {
+                var files = e.target.files;
+                console.log(files)
+                const output = document.querySelector("#result")
+                for (let i = 0; i < files.length; i++) {
+                    var picReader = new FileReader()
+                    console.log(picReader)
+                    picReader.addEventListener("load", function load(event) {//inner fun
+                        var picFile = event.target
+                        console.log(picFile)
+                        const div = document.createElement("div")
+                        const dragDiv = document.createElement("div")
+                        div.className = "outDiv"
+                        dragDiv.className = "outDiv"
+
+                        div.innerHTML = `<div class="inDiv" draggable="True" style='background-image:url("${picFile.result}");top: 5px; left: 5px; background-size:cover;  position: relative; height:145px; width:145px; cursor: pointer;'></div>`
+                        //src="${picFile.result}" title=${picFile.name}
+                        output.appendChild(div)
+                        document.getElementById("drop").appendChild(dragDiv)
+                        a = a + 1;
+                        //console.log(a + " in this")
+                        if (i == files.length - 1) {
+                            fun()
+                        }
+                        //div=document.getElementById("show").innerHTML=`<img class="op" src="${picFile.result}">`
+                    });
+
+                    picReader.readAsDataURL(files[i])
+
+                }
+
+            }
+            else {
+                alert("your Browser is not supported")
+            }
+
+
+
+
+            /*for (whiteBox of whiteBoxes) {
+                whiteBox.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    console.log('DragOver has been triggered');
+                });
+            
+                whiteBox.addEventListener('dragenter', (e) => {
+                    console.log('DragEnter has been triggered');
+                    e.target.className += ' dashed';
+                })
+            
+                whiteBox.addEventListener('dragleave', (e) => {
+                    console.log('DragLeave has been triggered');
+                    e.target.className = 'whiteBox'
+                })
+            
+                whiteBox.addEventListener('drop', (e) => {
+                    console.log('Drop has been triggered');
+                    e.target.append(imgBox);
+                    //e.target.className -= ' dashed';
+                    setTimeout(() => {
+                    e.target.classList.remove('dashed');
+                }, 0);
+            
+                })
+            }*/
+
+
+        });
+        function fun() {
+            console.log('This is drag and drop utility');
+            //console.log(a + "is it")
+
+            // const imgBox = document.querySelector('.imgBox');
+            //const whiteBoxs = document.getElementsByClassName('dragBox');
+            const innerBoxMains = document.querySelector('.inDiv');
+            // let innerBox2s = document.getElementsByClassName('inDiv');
+            const mainBoxs = document.getElementsByClassName('outDiv');
+
+            // Event listeners for draggable element imgBox
+            /*imgBox.addEventListener('dragstart', (e) => {
+                console.log('DragStart has been triggered');
+                e.target.className += ' hold';
+                setTimeout(() => {
+                    e.target.className = 'hide';
+                }, 0);
+            
+            });
+            imgBox.addEventListener('dragend', (e) => {
+                console.log('DragEnd has been triggered');
+                e.target.className = 'imgBox';
+               
+            });*/
+            //var num = innerBox2s.length;
+            //for (var i = 0; i < num; i++) {
+            innerBoxMains.addEventListener('dragstart', (e) => {
+                console.log('DragStart in maqinBox has been triggered ');
+                e.target.className += ' hold';
+                setTimeout(() => {
+                    e.target.className = 'hide';
+                }, 0);
+
+            });
+
+            innerBoxMains.addEventListener('dragend', (e) => {
+                console.log('DragEnd has been triggered');
+                e.target.className = 'inDiv';
+
+
+            });
+
+            for (outDiv of mainBoxs) {
+                outDiv.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    console.log('DragOver has been triggered');
+                });
+
+                outDiv.addEventListener('dragenter', (e) => {
+                    console.log('DragEnter has been triggered');
+                    e.target.className += ' dashed';
+                })
+
+                outDiv.addEventListener('dragleave', (e) => {
+                    console.log('DragLeave has been triggered');
+                    e.target.className = 'outDiv';
+                })
+
+                outDiv.addEventListener('drop', (e) => {
+                    console.log('Drop has been triggered');
+                    e.target.append(innerBoxMains);
+                    //e.target.className -= ' dashed';
+                    setTimeout(() => {
+                        e.target.classList.remove('dashed');
+                    }, 0);
+
+                })
+                //}
+            }
+        }
+
+
+    </script>
+</body>
+
 </html>
